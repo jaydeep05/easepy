@@ -145,16 +145,12 @@ def T2S(text_message,file_name):
    # r = sr.Recognizer()
 
    # file_audio = sr.AudioFile(file_name+".wav")
-
    # with file_audio as source:
    #    audio_text = r.record(source)
-
    # print(type(audio_text))
    # print(r.recognize_google(audio_text))
 
 # T2S("hello moto","test")
-
-
 # print (a)
 
 
