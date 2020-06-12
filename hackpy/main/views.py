@@ -8,12 +8,14 @@ import numpy as np
 from django.shortcuts import redirect, render, HttpResponse
 from fuzzywuzzy import fuzz
 from gtts import gTTS
+from django.http import JsonResponse
 #Global Variable
 
 defult_file_path = "/Applications/XAMPP/htdocs/php/SGH000699/Hackathon_php/files/";
 php_server_ip = "http://localhost/php/SGH000699/Hackathon_php/ease/";
 ###################################
 #For Sending the Value to py->php via Django
+
 def message_from_dj(request,message):
    #sample_test
    # data_py = str(csv_py("/mnt/d/Projects/python lib/persons.csv"))
@@ -32,12 +34,10 @@ def message_from_dj(request,message):
    return response
    # return render(request,'http://192.168.43.99/test.php?message="test from dj->ph"') 
 
-
 def callS2T(request):
    a= s2t("/Applications/XAMPP/htdocs/php/SGH000699/Hackathon_php/ease/uploads/test.wav")
    # print(a)
    return HttpResponse("<h1>MyClub Event Calendar</h1>")
-
 
 #For getting value form php->py via Django
 def message_from_php(request):
@@ -57,7 +57,9 @@ def message_from_php(request):
             file_path=request.GET['qacsv']
             output = []
             output = string_check(answer,file_path)
-            return message_from_dj(request,output)
+            # return message_from_dj(request,output)
+            print (JsonResponse(output))
+         return JsonResponse(output)
    elif(request.GET['type']=="text"):
       print ("TEXT Type")
       if request.GET['qacsv'] is 0:
@@ -66,7 +68,9 @@ def message_from_php(request):
          file_path=request.GET['qacsv']
          output = []
          output = string_check(request.GET['message'],file_path)
-         return message_from_dj(request,output)
+         # return message_from_dj(request,output)
+         print (JsonResponse(output))
+         return JsonResponse(output)
 
 ##################################################
 # PYTHON CODE FOR DATA MANULAPTION#
@@ -135,7 +139,6 @@ def s2t(voice):
      
    except sr.RequestError as e: 
        print("Could not request results from Google Speech Recognition service; {0}".format(e))   
-
 
 #Text->voice
 def T2S(text_message,file_name):
