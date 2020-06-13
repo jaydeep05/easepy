@@ -1,8 +1,5 @@
-fuzzywuzzy==0.18.0
-gTTS==2.1.1
-Django==3.0.7
-SpeechRecognition==3.8.1
 numpy==1.18.5
-gensim==3.8.3
-protobuf==3.12.2
-tqdm==4.46.1
+fuzzywuzzy==0.18.0
+Django==3.0.7
+gTTS==2.1.1
+SpeechRecognition==3.8.1
