@@ -76,8 +76,8 @@ def message_from_php(request):
             output = []
             output = string_check(request.POST.get('message'),file_path)
             # return HttpResponse(json.dumps(output))
-            # print("output ",json.dumps(output))
-            return JsonResponse(output, safe=False)
+            print("output ",json.dumps(output))
+            return JsonResponse(output)
             # return json.dumps(output)
 
 ##################################################
