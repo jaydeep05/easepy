@@ -14,8 +14,10 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 #Global Variable
-
-defult_file_path = "/Applications/XAMPP/htdocs/php/easeassist/files/";
+#JD
+# defult_file_path = "/Applications/XAMPP/htdocs/php/easeassist/files/";
+#Vraj
+defult_file_path = "/mnt/d/Projects/XAMPP/htdocs/php/easeassist/files/";
 # php_server_ip = "http://localhost/php/SGH000699/Hackathon_php/ease/";
 ###################################
 #For Sending the Value to py->php via Django
