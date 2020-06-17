@@ -18,7 +18,7 @@ from django.contrib import admin
 from main import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^djmessage', views.message_from_dj, name='py->php'),
+    # url(r'^djmessage', views.message_from_dj, name='py->php'),
     url(r'^phpmessage', views.message_from_php, name='php->py'),
     url(r'^s2t', views.callS2T, name='ph')
 ]

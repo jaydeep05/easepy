@@ -15,61 +15,36 @@ from django.views.decorators.csrf import csrf_exempt
 
 #Global Variable
 
-defult_file_path = "/Applications/XAMPP/htdocs/php/easeassist/files/";
-# php_server_ip = "http://localhost/php/SGH000699/Hackathon_php/ease/";
-###################################
-#For Sending the Value to py->php via Django
-@csrf_exempt
-def message_from_dj(request,message):
-   #sample_test
-   # data_py = str(csv_py("/mnt/d/Projects/python lib/persons.csv"))
-   # final_respose = "http://hackthon_php/test_UserInput.php?message="+data_py
-   #end_sameple
-   i=1
-   for arg in message: 
-      if i==1:
-         final_message = "val"+str(i)+"="+str(arg) 
-      else:
-         final_message = final_message+"&val"+str(i)+"="+str(arg)
-      i=i+1
-   final_respose = php_server_ip+"last_page.php?"+final_message
-   print (final_respose)
-   response = redirect(final_respose)
-   return response
-   # return render(request,'http://192.168.43.99/test.php?message="test from dj->ph"') 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+UPLOAD_DIR = os.path.abspath(os.path.join(BASE_DIR, '../../easeassist/uploads'))
+defult_file_path = os.path.abspath(os.path.join(BASE_DIR, '../../easeassist/files'))
 
 def callS2T(request):
-   a= s2t("/Applications/XAMPP/htdocs/php/SGH000699/Hackathon_php/ease/uploads/test.wav")
-   # print(a)
-   return HttpResponse("<h1>MyClub Event Calendar</h1>")
+   a = s2t(UPLOAD_DIR+'/test.wav')
+   print(a)
+   return HttpResponse(a)
 
 #For getting value form php->py via Django
 @csrf_exempt
 def message_from_php(request):
-   #Smaple_Message_from_php
-   # raw_message_php = request.POST.get['message']
-   # print raw_message_php
-   #End_smaple
-   print(request.POST.get('type'))
-   print(request.POST.get('message'))
-   print(request.POST.get('qacsv'))
    if(request.method == "POST"):
       if(request.POST.get('type')=="voice"):
-         answer=s2t(request.POST.get('voice_file'))
-         if "#error#" in answer:
-            message_from_dj(request,answer)
-         else:
-            if request.POST.get('qacsv') is 0:
-               print("CSV is not available")
-            else:
-               file_path=request.POST.get('qacsv')
-               output = []
-               output = string_check(answer,file_path)
-               # return message_from_dj(request,output)
-               print (JsonResponse(output))
-            return JsonResponse(output)
+         print(UPLOAD_DIR+'/test.wav')
+         answer= s2t(UPLOAD_DIR+'/test.wav') #s2t(request.POST.get('voice_file'))
+         # if request.POST.get('qacsv') == 0:
+         #    print("CSV is not available")
+         # else:
+         #    file_path=request.POST.get('qacsv')
+         #    output = []
+         #    output = string_check(answer,file_path)
+         #    for val in output.items():
+         #       print(val)
+         #    output = output.update({2:answer})
+         #    print (output)
+         # return JsonResponse(output)
+         return HttpResponse(answer)
       elif(request.POST.get('type')=="text"):
-         if request.POST.get('qacsv') is 0:
+         if request.POST.get('qacsv') == 0:
                print ("data is not available")
          else:
             file_path=request.POST.get('qacsv')
@@ -103,7 +78,7 @@ def string_check(user_input,file_path):
    threshold_value = 40
    final_output = []
    #funcation for CSV->py
-   file_path=defult_file_path+file_path
+   file_path=defult_file_path+'/'+file_path
    qacsv=csv_py(file_path)
    percsv= np.zeros((len(qacsv), 2))
    # print (percsv)
@@ -130,18 +105,18 @@ def string_check(user_input,file_path):
 
 #voice->text
 def s2t(voice):
+   print("voice = "+voice)
    r = sr.Recognizer()
    with sr.AudioFile(voice) as source:
-       audio = r.record(source)   
-     
-   try: 
-       print(r.recognize_google(audio)) 
-     
-   except sr.UnknownValueError: 
-       print("Google Speech Recognition could not understand audio") 
-     
-   except sr.RequestError as e: 
-       print("Could not request results from Google Speech Recognition service; {0}".format(e))   
+      audio = r.record(source)    
+   try:
+      texxt = r.recognize_google(audio)
+      print("text = "+texxt)
+      return texxt
+   except sr.UnknownValueError:
+      return "Speech Recognition could not understand audio"
+   except sr.RequestError as e:
+      return "Could not request results from Speech Recognition service; {0}".format(e)
 
 #Text->voice
 def T2S(text_message,file_name):
