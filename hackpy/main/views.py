@@ -14,7 +14,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 #Global Variable
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 UPLOAD_DIR = os.path.abspath(os.path.join(BASE_DIR, '../../easeassist/uploads'))
 defult_file_path = os.path.abspath(os.path.join(BASE_DIR, '../../easeassist/files'))

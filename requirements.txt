@@ -4,3 +4,4 @@ Django==3.0.7
 gTTS==2.1.1
 SpeechRecognition==3.8.1
 django-cors-headers==3.4.0
+psycopg2-binary>=2.8
