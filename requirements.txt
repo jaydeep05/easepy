@@ -1,4 +1,4 @@
-numpy==1.18.5
+numpy==1.22.0
 fuzzywuzzy==0.18.0
 Django==3.0.7
 gTTS==2.1.1
